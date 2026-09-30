@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nguyễn Quỳnh Hoa 🌷 | Personal Portfolio</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-cream: #fff5f7;
+      --bg-card: rgba(255, 255, 255, 0.86);
+      --bg-card-hover: rgba(255, 255, 255, 0.98);
+      --border-pink: rgba(244, 114, 182, 0.3);
+      --primary-pink: #ec4899;
+      --primary-dark: #be185d;
+      --sakura-glow: #f472b6;
+      --petal-color: #fbcfe8;
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --text-light: #6b7280;
+      --shadow-soft: 0 10px 30px rgba(236, 72, 153, 0.12);
+      --shadow-hover: 0 20px 40px rgba(236, 72, 153, 0.22);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 50%, #ffd6e0 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    #sakura-canvas {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 1;
+    }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+    .glass-card {
+      background: var(--bg-card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-pink); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft); transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      box-shadow: var(--shadow-hover); border-color: rgba(236, 72, 153, 0.45);
+      background: var(--bg-card-hover); transform: translateY(-4px);
+    }
+    .site-nav { position: sticky; top: 16px; z-index: 100; margin-bottom: 24px; }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 14px 28px; }
+    .nav-brand { font-size: 1.35rem; font-weight: 700; color: var(--primary-dark); font-family: 'Playfair Display', serif; text-decoration: none; }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
+    .nav-links a:hover { color: var(--primary-pink); }
+    .btn-pill {
+      background: linear-gradient(135deg, #ec4899, #f472b6); color: #fff; border: none;
+      padding: 8px 20px; border-radius: 30px; font-weight: 600; font-size: 0.88rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); transition: all 0.25s ease;
+    }
+    .btn-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(236, 72, 153, 0.45); }
+    
+    /* Hero */
+    .hero { padding: 20px 0 45px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 0.9fr; gap: 36px; align-items: center; }
+    .hero-intro-pill {
+      display: inline-flex; align-items: center; gap: 8px; background: rgba(254, 205, 211, 0.5);
+      border: 1px solid rgba(244, 114, 182, 0.3); padding: 6px 16px; border-radius: 30px;
+      font-size: 0.88rem; font-weight: 600; color: var(--primary-dark); margin-bottom: 16px;
+    }
+    .hero-name { font-size: 3.2rem; font-weight: 700; line-height: 1.15; color: #831843; margin-bottom: 12px; }
+    .hero-subtitle { font-size: 1.25rem; color: #9d174d; font-weight: 600; margin-bottom: 16px; }
+    .hero-bio {
+      font-size: 1.05rem; color: var(--text-muted); margin-bottom: 22px;
+      background: rgba(255, 255, 255, 0.65); padding: 16px 20px; border-radius: var(--radius-md);
+      border-left: 4px solid var(--primary-pink);
+    }
+    .tags-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+    .tag-badge {
+      background: #fff; border: 1px solid var(--border-pink); padding: 6px 14px;
+      border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: var(--primary-dark);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .hero-contacts { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.92rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.75);
+      padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(244, 114, 182, 0.2);
+    }
+    .contact-item i { color: var(--primary-pink); }
+    
+    /* Interactive Image Containers */
+    .photo-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      border: 3px solid #fff;
+      box-shadow: 0 10px 25px rgba(236, 72, 153, 0.18);
+      display: block;
+      line-height: 0;
+      width: 100%;
+    }
+    .photo-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .photo-box:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Profile Card */
+    .profile-card-inner { padding: 28px; text-align: center; }
+    .profile-photo-box {
+      width: 240px;
+      height: 300px;
+      margin: 0 auto 18px;
+      border-radius: 120px 120px 24px 24px;
+      box-shadow: 0 15px 35px rgba(236, 72, 153, 0.25);
+      background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+      overflow: hidden;
+    }
+    .profile-photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 65%;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .social-row { display: flex; justify-content: center; gap: 14px; margin-top: 18px; }
+    .social-btn {
+      width: 44px; height: 44px; border-radius: 50%; background: #fff; display: flex;
+      align-items: center; justify-content: center; color: var(--primary-pink);
+      text-decoration: none; font-size: 1.2rem; border: 1px solid var(--border-pink);
+      transition: all 0.25s ease;
+    }
+    .social-btn:hover { background: var(--primary-pink); color: #fff; transform: translateY(-3px); }
+
+    /* Sections */
+    .section { padding: 45px 0; }
+    .section-title-wrap { text-align: center; margin-bottom: 34px; }
+    .section-tag {
+      font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--primary-pink); display: block; margin-bottom: 6px;
+    }
+    .section-title { font-size: 2.2rem; color: #831843; margin-bottom: 8px; }
+
+    /* Education with Images */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+    .edu-card { padding: 24px; display: flex; flex-direction: column; text-align: center; align-items: center; }
+    .edu-photo {
+      width: 100%;
+      height: auto;
+      margin-bottom: 18px;
+    }
+    .edu-year-badge {
+      display: inline-block; background: linear-gradient(135deg, #fbcfe8, #f472b6); color: #831843;
+      font-weight: 700; font-size: 0.85rem; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px;
+      align-self: center;
+    }
+    .edu-school { font-size: 1.3rem; color: #9d174d; margin-bottom: 4px; text-align: center; }
+    .edu-program { font-weight: 700; color: var(--primary-pink); margin-bottom: 10px; text-align: center; }
+    .edu-desc { color: #111827; font-size: 0.95rem; line-height: 1.65; margin-bottom: 0; text-align: center; }
+
+    /* Interests with Images (Page 2 of CV) */
+    .interests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+    .interest-card { padding: 22px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .interest-photo {
+      width: 100%;
+      height: auto;
+      margin-bottom: 16px;
+    }
+    .interest-title { font-size: 1.25rem; color: #831843; margin-bottom: 8px; text-align: center; }
+    .interest-desc { color: #111827; font-size: 0.92rem; line-height: 1.65; margin-bottom: 0; text-align: center; }
+
+    /* Work Experience with Images (Page 3 of CV) */
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+    .exp-card { padding: 24px; display: flex; flex-direction: column; text-align: center; align-items: center; }
+    .exp-photo {
+      width: 100%;
+      height: auto;
+      margin-bottom: 16px;
+    }
+    .exp-role { font-size: 1.3rem; color: #9d174d; margin-bottom: 4px; text-align: center; }
+    .exp-org { font-weight: 700; color: var(--primary-pink); margin-bottom: 12px; text-align: center; }
+
+    /* Piano */
+    .piano-wrapper {
+      padding: 34px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(253, 242, 248, 0.9) 100%);
+      border-radius: var(--radius-lg); border: 2px solid rgba(244, 114, 182, 0.35); box-shadow: var(--shadow-hover);
+    }
+    .player-header {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+      margin-bottom: 22px; border-bottom: 1px dashed rgba(244, 114, 182, 0.4); padding-bottom: 16px;
+    }
+    .disc-spin {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: radial-gradient(circle, #f472b6 25%, #831843 30%, #4c0519 90%);
+      border: 3px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex;
+      align-items: center; justify-content: center; color: #fff; font-size: 1.2rem;
+      animation: spin 6s linear infinite; animation-play-state: paused;
+    }
+    .disc-spin.playing { animation-play-state: running; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .wave-bars { display: flex; gap: 4px; align-items: flex-end; height: 24px; }
+    .wave-bar { width: 4px; height: 6px; background: var(--primary-pink); border-radius: 2px; }
+    .playing .wave-bar:nth-child(1) { animation: bounce 1s infinite alternate 0.1s; }
+    .playing .wave-bar:nth-child(2) { animation: bounce 1.2s infinite alternate 0.2s; }
+    .playing .wave-bar:nth-child(3) { animation: bounce 0.8s infinite alternate 0.3s; }
+    .playing .wave-bar:nth-child(4) { animation: bounce 1.1s infinite alternate 0.4s; }
+    @keyframes bounce { 0% { height: 4px; } 100% { height: 24px; } }
+    .piano-keyboard { display: flex; justify-content: center; position: relative; margin: 18px auto 8px; max-width: 680px; }
+    .white-key {
+      width: 60px; height: 175px; background: #fff; border: 1px solid #e5e7eb; border-bottom: 5px solid #d1d5db;
+      border-radius: 0 0 8px 8px; display: flex; flex-direction: column; justify-content: flex-end;
+      align-items: center; padding-bottom: 12px; font-size: 0.75rem; font-weight: 700; color: #9ca3af;
+      cursor: pointer; box-shadow: 0 6px 12px rgba(0,0,0,0.06); transition: all 0.1s ease;
+    }
+    .white-key:hover, .white-key.active { background: #fdf2f8; border-bottom-color: #ec4899; color: #ec4899; transform: translateY(2px); }
+    .black-key {
+      width: 36px; height: 110px; background: #374151; border-radius: 0 0 6px 6px; position: absolute;
+      z-index: 2; cursor: pointer; display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 8px; color: #9ca3af; font-size: 0.7rem; box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .black-key:hover, .black-key.active { background: #831843; transform: translateY(2px); }
+
+    /* Mini Game */
+    .game-box { padding: 30px; text-align: center; }
+    .game-hud {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+      margin-bottom: 18px; padding: 12px 20px; background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px; border: 1px solid var(--border-pink);
+    }
+    .hud-stat { font-size: 1.1rem; font-weight: 700; color: #831843; }
+    .hud-stat span { color: var(--primary-pink); font-size: 1.3rem; }
+    .game-canvas-wrap {
+      position: relative; width: 100%; max-width: 800px; height: 380px; margin: 0 auto;
+      border-radius: 20px; overflow: hidden; border: 3px solid rgba(244, 114, 182, 0.4);
+      background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 70%, #fbcfe8 100%);
+    }
+    #game-canvas { width: 100%; height: 100%; display: block; cursor: crosshair; }
+    .game-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 241, 242, 0.9); backdrop-filter: blur(4px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5;
+    }
+    html { scroll-behavior: smooth; }
+    #contact { scroll-margin-top: 110px; }
+
+    /* Scrapbook Page Transition Animations */
+    .scrapbook-page {
+      opacity: 0;
+      transform: translateY(24px) scale(0.99);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .scrapbook-page.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .edu-card.scrapbook-page:nth-child(1),
+    .interest-card.scrapbook-page:nth-child(1),
+    .exp-card.scrapbook-page:nth-child(1) {
+      transition-delay: 0.05s;
+    }
+    .edu-card.scrapbook-page:nth-child(2),
+    .interest-card.scrapbook-page:nth-child(2),
+    .exp-card.scrapbook-page:nth-child(2) {
+      transition-delay: 0.16s;
+    }
+    .interest-card.scrapbook-page:nth-child(3) {
+      transition-delay: 0.28s;
+    }
+
+    /* Outro Section */
+    .outro-section { padding: 40px 0 55px; }
+    .outro-card {
+      max-width: 820px; margin: 0 auto; padding: 44px 32px; text-align: center;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 242, 246, 0.95) 100%);
+      border: 2px dashed rgba(244, 114, 182, 0.45); position: relative;
+    }
+    .outro-flower { font-size: 1.8rem; margin-bottom: 12px; letter-spacing: 6px; }
+    .outro-title {
+      font-size: 1.65rem; font-weight: 700; color: #831843; letter-spacing: 1px;
+      margin-bottom: 12px; line-height: 1.35;
+    }
+    .outro-quote {
+      font-size: 1.15rem; font-style: italic; color: #9d174d;
+      font-family: 'Playfair Display', serif; margin-bottom: 14px;
+    }
+    .outro-sub {
+      font-size: 0.88rem; font-weight: 600; color: var(--primary-pink);
+      text-transform: uppercase; letter-spacing: 2px;
+    }
+
+    .site-footer { padding: 40px 0; text-align: center; border-top: 1px solid rgba(244, 114, 182, 0.3); color: var(--text-muted); }
+    @media (max-width: 900px) {
+      .hero-grid, .edu-grid, .exp-grid, .interests-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 2.6rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="sakura-canvas"></canvas>
+
+  <header class="site-nav">
+    <div class="container">
+      <nav class="nav-inner glass-card">
+        <a href="#" class="nav-brand"><span>🌷</span> Nguyễn Quỳnh Hoa</a>
+        <ul class="nav-links">
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#interests">Interests</a></li>
+          <li><a href="#experience">Activities</a></li>
+          <li><a href="#music">Piano Music</a></li>
+          <li><a href="#game">Sakura Game</a></li>
+        </ul>
+        <div>
+          <a href="#game" class="btn-pill"><i class="fa-solid fa-gamepad"></i> Chơi Game</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="about" class="hero scrapbook-page in-view">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-intro-pill"><span>🌸</span> Foreign Trade University • Business Chinese</div>
+            <h1 class="hero-name"><span>NGUYỄN QUỲNH HOA</span></h1>
+            <div class="hero-subtitle"><span>🌷</span> Hi there, I'm Quynh Hoa</div>
+            <div class="hero-bio">
+              "I am a third-year student at <strong>Foreign Trade University</strong>, majoring in <strong>Business Chinese</strong>.<br>
+              I have a deep passion for languages, literature, art, and new experiences. For me, learning is not merely about acquiring knowledge—it is a journey of self-discovery, observing the world, and uncovering the things that truly inspire me."
+            </div>
+            <div class="tags-cloud">
+              <span class="tag-badge"><i class="fa-solid fa-language"></i> Chinese</span>
+              <span class="tag-badge"><i class="fa-solid fa-feather-pointed"></i> Literature</span>
+              <span class="tag-badge"><i class="fa-solid fa-person-running"></i> Dance</span>
+              <span class="tag-badge"><i class="fa-solid fa-film"></i> Movies</span>
+              <span class="tag-badge"><i class="fa-solid fa-earth-asia"></i> Culture</span>
+              <span class="tag-badge"><i class="fa-solid fa-plane-departure"></i> Travel</span>
+            </div>
+            <div id="contact" class="hero-contacts">
+              <div class="contact-item"><i class="fa-solid fa-phone"></i> <span>0918638039</span></div>
+              <div class="contact-item"><i class="fa-solid fa-envelope"></i> <span>nqhoa68@gmail.com</span></div>
+              <div class="contact-item"><i class="fa-solid fa-location-dot"></i> <span>Phường Láng, Hà Nội</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="profile-card-inner glass-card">
+              <!-- Photo 1: Avatar / Portrait (CV Page 1) -->
+              <div class="photo-box profile-photo-box">
+                <img id="img-avatar" src="images/avatar.jpg" alt="Nguyễn Quỳnh Hoa - Portrait" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+              </div>
+              <h3 style="font-size: 1.4rem; color: #831843;">Quỳnh Hoa 🌷</h3>
+              <p style="color: var(--text-muted); font-size: 0.92rem;">24/08/2006</p>
+              <div class="social-row">
+                <a href="https://www.facebook.com/wynhoa.26" target="_blank" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/ng.quynhoa" target="_blank" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:nqhoa68@gmail.com" class="social-btn" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="tel:0918638039" class="social-btn" title="Phone"><i class="fa-solid fa-phone"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-tag">Academic Background</span>
+          <h2 class="section-title">Education Journey</h2>
+        </div>
+        <div class="edu-grid">
+          <!-- Photo 2: Vinh High School (CV Page 1) -->
+          <div class="edu-card glass-card scrapbook-page">
+            <div class="photo-box edu-photo">
+              <img id="img-vinh" src="images/vinh_highschool.jpg" alt="Vinh University High School for Gifted" onerror="this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <span class="edu-year-badge">2021 - 2024</span>
+            <h3 class="edu-school">Vinh University High School for Gifted</h3>
+            <div class="edu-program"><i class="fa-solid fa-book-bookmark"></i> Literature Specialized Class</div>
+            <p class="edu-desc">Studying in the Literature Specialized Class gave me the opportunity to immerse myself in words, emotions, and heartfelt human stories. I learned to view life from a deeper perspective, to truly listen, and to cherish the little wonders around me. Those years not only enriched my knowledge but also gifted me countless cherished memories, and to this day, literature remains a very special part of my journey.</p>
+          </div>
+
+          <!-- Photo 3: FTU University (CV Page 1) -->
+          <div class="edu-card glass-card scrapbook-page">
+            <div class="photo-box edu-photo">
+              <img id="img-ftu" src="images/ftu_student.jpg" alt="Foreign Trade University (FTU)" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <span class="edu-year-badge">2024 - 2028</span>
+            <h3 class="edu-school">Foreign Trade University (FTU)</h3>
+            <div class="edu-program"><i class="fa-solid fa-graduation-cap"></i> Business Chinese Major</div>
+            <p class="edu-desc">Studying Business Chinese helped me realize that language is not merely for everyday communication, but can also be directly applied to professional careers. From drafting business emails and official documents to negotiating with international partners and exploring import-export and trade operations, every lesson is closely tied to real-world scenarios. Through this, I have not only enhanced my Chinese proficiency but also gained a clearer understanding of how language connects with the world of business.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERESTS SECTION (Page 2 of CV) -->
+    <section id="interests" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-tag">Passions & Hobbies</span>
+          <h2 class="section-title">My Interests</h2>
+        </div>
+        <div class="interests-grid">
+          <!-- Photo 4: Literature (CV Page 2) -->
+          <div class="interest-card glass-card scrapbook-page">
+            <div class="photo-box interest-photo">
+              <img id="img-lit" src="images/literature.jpg" alt="Literature Passion" onerror="this.src='https://images.unsplash.com/photo-1507842229451-7f01be777a26?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <h3 class="interest-title">Literature</h3>
+            <p class="interest-desc">Having been part of a literature-focused program, literature has always been an endearing chapter in my personal story. I love reading books, writing, and appreciating how people express their innermost thoughts and emotions through the beauty of language.</p>
+          </div>
+
+          <!-- Photo 5: Dance (CV Page 2) -->
+          <div class="interest-card glass-card scrapbook-page">
+            <div class="photo-box interest-photo">
+              <img id="img-dance" src="images/dance.jpg" alt="Dance Passion" onerror="this.src='https://images.unsplash.com/photo-1518834107812-67b0b7c58434?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <h3 class="interest-title">Dance</h3>
+            <p class="interest-desc">I enjoy dancing as a liberating way to express emotions, ignite creativity, and connect with people through rhythm and movement. It has also instilled in me patience, discipline, and authentic self-confidence.</p>
+          </div>
+
+          <!-- Photo 6: Travel (CV Page 2) -->
+          <div class="interest-card glass-card scrapbook-page">
+            <div class="photo-box interest-photo">
+              <img id="img-travel" src="images/travel.jpg" alt="Travel Passion" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <h3 class="interest-title">Travel</h3>
+            <p class="interest-desc">I love traveling to new destinations, exploring unique local cultures, and listening to the untold stories behind every place. To me, each journey brings valuable lessons, rich experiences, and a broader outlook on life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK EXPERIENCE SECTION (Page 3 of CV) -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-tag">Activities & Experience</span>
+          <h2 class="section-title">Work Experience</h2>
+        </div>
+        <div class="exp-grid">
+          <!-- Photo 7: Phim Chạm Poster (CV Page 3) -->
+          <div class="exp-card glass-card scrapbook-page">
+            <div class="photo-box exp-photo">
+              <img id="img-phim" src="images/phim_cham.jpg" alt="Phim Chạm - 13 Years Old Project" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <h3 class="exp-role">Media Team Member</h3>
+            <div class="exp-org">Nghe An Hometown Volunteer Club – Foreign Trade University</div>
+            <p class="edu-desc">As a dedicated member of the Media Team, I took part in content creation and executing communication campaigns for club initiatives (notably the event project "Phim Chạm - 13 Tuổi"). This hands-on experience allowed me to foster creativity, elevate teamwork coordination, and gain valuable practical insights in media and event communications.</p>
+          </div>
+
+          <!-- Photo 8: Graduation Volunteer (CV Page 3) -->
+          <div class="exp-card glass-card scrapbook-page">
+            <div class="photo-box exp-photo">
+              <img id="img-grad" src="images/graduation_volunteer.jpg" alt="Graduation Ceremony Volunteer 2026" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <h3 class="exp-role">Graduation Ceremony Volunteer 2026</h3>
+            <div class="exp-org">Foreign Trade University</div>
+            <p class="edu-desc">I supported event organization, logistics, and on-site guest coordination, collaborating seamlessly with the organizing committee and fellow volunteers to ensure a graceful and dignified ceremony. Through this role, I strengthened my communication skills, situational adaptability, and strong sense of accountability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIANO & MUSIC -->
+    <section id="music" class="section">
+      <div class="container">
+        <div class="piano-wrapper">
+          <div class="player-header">
+            <div class="player-info" style="display:flex; align-items:center; gap:16px;">
+              <div class="disc-spin" id="disc">🌸</div>
+              <div>
+                <h4 style="color:#831843;">Sakura Piano Melody</h4>
+                <p style="font-size:0.85rem; color:var(--text-light);">Gentle acoustic piano chords</p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="wave-bars" id="wave-bars">
+                <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+              </div>
+              <button id="play-piano-btn" class="btn-pill"><i class="fa-solid fa-play" id="play-icon"></i> <span id="play-text">Phát Nhạc Piano</span></button>
+            </div>
+          </div>
+          <p style="text-align:center; color:var(--text-muted); font-size:0.92rem; margin-bottom:8px;">
+            🎹 <em>Nhấp vào các phím piano bên dưới để tự chơi giai điệu êm dịu của bạn:</em>
+          </p>
+          <div class="piano-keyboard">
+            <div class="white-key" data-note="261.63"><span>Do (C)</span></div>
+            <div class="black-key" style="left: 42px;" data-note="277.18">C#</div>
+            <div class="white-key" data-note="293.66"><span>Re (D)</span></div>
+            <div class="black-key" style="left: 104px;" data-note="311.13">D#</div>
+            <div class="white-key" data-note="329.63"><span>Mi (E)</span></div>
+            <div class="white-key" data-note="349.23"><span>Fa (F)</span></div>
+            <div class="black-key" style="left: 226px;" data-note="369.99">F#</div>
+            <div class="white-key" data-note="392.00"><span>Sol (G)</span></div>
+            <div class="black-key" style="left: 288px;" data-note="415.30">G#</div>
+            <div class="white-key" data-note="440.00"><span>La (A)</span></div>
+            <div class="black-key" style="left: 350px;" data-note="466.16">A#</div>
+            <div class="white-key" data-note="493.88"><span>Si (B)</span></div>
+            <div class="white-key" data-note="523.25"><span>Do (C5)</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINI GAME -->
+    <section id="game" class="section">
+      <div class="container">
+        <div class="section-title-wrap">
+          <span class="section-tag">Mini Game</span>
+          <h2 class="section-title">Sakura Petal Catcher</h2>
+        </div>
+        <div class="game-box glass-card">
+          <div class="game-hud">
+            <div class="hud-stat">Điểm: <span id="game-score">0</span></div>
+            <div class="hud-stat">Kỷ lục: <span id="game-best">0</span></div>
+            <div class="hud-stat">Cánh hoa đã hứng: <span id="game-caught">0</span> 🌸</div>
+            <button id="game-start-btn" class="btn-pill"><i class="fa-solid fa-play"></i> Bắt đầu chơi</button>
+          </div>
+          <div class="game-canvas-wrap">
+            <canvas id="game-canvas" width="800" height="380"></canvas>
+            <div class="game-overlay" id="game-overlay">
+              <span style="font-size:3.5rem; margin-bottom:8px;">🌸🧺</span>
+              <h3 style="color:#831843; margin-bottom:8px;">Sakura Petal Catcher</h3>
+              <p style="max-width:440px; margin-bottom:18px; color:var(--text-muted); font-size:0.95rem;">
+                Di chuyển chiếc giỏ bằng chuột hoặc cảm ứng để hứng cánh hoa rơi. Mỗi cánh hoa hứng trúng sẽ phát ra một nốt nhạc piano thánh thót!
+              </p>
+              <button id="overlay-play-btn" class="btn-pill" style="font-size:1.05rem; padding:12px 28px;">Bắt đầu chơi ngay 🌸</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- OUTRO SECTION -->
+    <section class="section outro-section scrapbook-page">
+      <div class="container">
+        <div class="glass-card outro-card">
+          <div class="outro-flower">🌷🌸🌷</div>
+          <h2 class="outro-title">THANK YOU FOR VISITING MY LITTLE CORNER 🌸</h2>
+          <p class="outro-quote">“Every little experience becomes a part of the story. Have a nice day”</p>
+          <div class="outro-sub">With love & gratitude • Quỳnh Hoa</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p style="font-size:1.1rem; color:#831843; font-weight:600;">Nguyễn Quỳnh Hoa 🌷 • Foreign Trade University</p>
+      <p>0918638039 • nqhoa68@gmail.com • Phường Láng, Hà Nội</p>
+    </div>
+  </footer>
+
+  <script>
+    // Restore saved images from LocalStorage if any
+
+    // Restore saved images from LocalStorage
+    ['img-avatar', 'img-vinh', 'img-ftu', 'img-lit', 'img-dance', 'img-travel', 'img-phim', 'img-grad'].forEach(id => {
+      const saved = localStorage.getItem('saved_' + id);
+      if (saved) {
+        const el = document.getElementById(id);
+        if (el) el.src = saved;
+      }
+    });
+
+    // 1. Sakura Canvas
+    const canvas = document.getElementById('sakura-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+
+    class Petal {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * width; this.y = Math.random() * -height * 0.5;
+        this.size = Math.random() * 9 + 8; this.speedX = Math.random() * 1.5 - 0.5; this.speedY = Math.random() * 1.2 + 0.8;
+        this.rotation = Math.random() * 360; this.rotationSpeed = (Math.random() - 0.5) * 1.8;
+        this.swing = Math.random() * 2; this.swingSpeed = Math.random() * 0.02 + 0.01; this.swingOffset = Math.random() * Math.PI * 2;
+        this.opacity = Math.random() * 0.4 + 0.45; this.color = Math.random() > 0.4 ? '#fbcfe8' : '#f472b6';
+      }
+      update() {
+        this.swingOffset += this.swingSpeed; this.x += this.speedX + Math.sin(this.swingOffset) * this.swing;
+        this.y += this.speedY; this.rotation += this.rotationSpeed;
+        if (this.y > height + 20 || this.x < -30 || this.x > width + 30) { this.reset(); this.y = -15; }
+      }
+      draw() {
+        ctx.save(); ctx.translate(this.x, this.y); ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.globalAlpha = this.opacity; ctx.beginPath(); ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, this.size/3, 0, this.size);
+        ctx.bezierCurveTo(this.size, this.size/3, this.size/2, -this.size/2, 0, 0);
+        ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
+      }
+    }
+    const petals = Array.from({ length: 42 }, () => new Petal());
+    function animatePetals() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // 2. Web Audio Piano
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+    function playPianoNote(freq, duration = 1.6, velocity = 0.35) {
+      initAudio();
+      const now = audioCtx.currentTime;
+      const noteGain = audioCtx.createGain();
+      noteGain.connect(audioCtx.destination);
+      noteGain.gain.setValueAtTime(0.0001, now);
+      noteGain.gain.linearRampToValueAtTime(velocity, now + 0.015);
+      noteGain.gain.exponentialRampToValueAtTime(velocity * 0.45, now + 0.2);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      [ { mult: 1, gain: 1.0 }, { mult: 2, gain: 0.45 }, { mult: 3, gain: 0.18 } ].forEach(h => {
+        const osc = audioCtx.createOscillator();
+        const hGain = audioCtx.createGain();
+        osc.type = 'triangle'; osc.frequency.setValueAtTime(freq * h.mult, now);
+        hGain.gain.setValueAtTime(h.gain, now); osc.connect(hGain); hGain.connect(noteGain);
+        osc.start(now); osc.stop(now + duration);
+      });
+    }
+
+    document.querySelectorAll('.piano-keyboard .white-key, .piano-keyboard .black-key').forEach(key => {
+      key.addEventListener('mousedown', () => {
+        key.classList.add('active'); playPianoNote(parseFloat(key.dataset.note), 1.8, 0.4);
+      });
+      key.addEventListener('mouseup', () => key.classList.remove('active'));
+      key.addEventListener('mouseleave', () => key.classList.remove('active'));
+    });
+
+    const melodyNotes = [
+      { freq: 261.63, time: 0 }, { freq: 329.63, time: 400 }, { freq: 392.00, time: 800 },
+      { freq: 523.25, time: 1200 }, { freq: 440.00, time: 1800 }, { freq: 392.00, time: 2400 },
+      { freq: 293.66, time: 3200 }, { freq: 349.23, time: 3600 }, { freq: 440.00, time: 4000 },
+      { freq: 523.25, time: 4400 }, { freq: 493.88, time: 5000 }, { freq: 392.00, time: 5600 }
+    ];
+    let isPlaying = false, melodyTimeouts = [];
+    const disc = document.getElementById('disc');
+    const waveBars = document.getElementById('wave-bars');
+    const playPianoBtn = document.getElementById('play-piano-btn');
+    const playIcon = document.getElementById('play-icon');
+    const playText = document.getElementById('play-text');
+
+    function startMelodyLoop() {
+      if (!isPlaying) return;
+      initAudio();
+      melodyNotes.forEach(n => {
+        melodyTimeouts.push(setTimeout(() => { if (isPlaying) playPianoNote(n.freq, 2.0, 0.28); }, n.time));
+      });
+      melodyTimeouts.push(setTimeout(() => { if (isPlaying) startMelodyLoop(); }, 6600));
+    }
+    playPianoBtn.addEventListener('click', () => {
+      if (!isPlaying) {
+        isPlaying = true; disc.classList.add('playing'); waveBars.classList.add('playing');
+        playIcon.className = 'fa-solid fa-pause'; playText.textContent = 'Tạm Dừng';
+        startMelodyLoop();
+      } else {
+        isPlaying = false; melodyTimeouts.forEach(clearTimeout); melodyTimeouts = [];
+        disc.classList.remove('playing'); waveBars.classList.remove('playing');
+        playIcon.className = 'fa-solid fa-play'; playText.textContent = 'Phát Nhạc Piano';
+      }
+    });
+
+    // 3. Mini Game
+    const gCanvas = document.getElementById('game-canvas');
+    const gCtx = gCanvas.getContext('2d');
+    const gameOverlay = document.getElementById('game-overlay');
+    const scoreEl = document.getElementById('game-score');
+    const bestEl = document.getElementById('game-best');
+    const caughtEl = document.getElementById('game-caught');
+    let gameRunning = false, score = 0, bestScore = 0, caughtCount = 0;
+    const basket = { x: 360, y: 320, width: 80, height: 38, speed: 8 };
+    let gameItems = [], spawnTimer = 0;
+    const notesPentatonic = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+
+    function startGame() {
+      initAudio(); score = 0; caughtCount = 0; gameItems = [];
+      scoreEl.textContent = '0'; caughtEl.textContent = '0';
+      basket.x = gCanvas.width / 2 - basket.width / 2;
+      gameRunning = true; gameOverlay.style.display = 'none';
+      document.getElementById('game-start-btn').innerHTML = '<i class="fa-solid fa-rotate-right"></i> Chơi Lại';
+    }
+    document.getElementById('overlay-play-btn').addEventListener('click', startGame);
+    document.getElementById('game-start-btn').addEventListener('click', startGame);
+
+    function moveBasket(clientX) {
+      const rect = gCanvas.getBoundingClientRect();
+      const scaleX = gCanvas.width / rect.width;
+      basket.x = Math.max(0, Math.min(gCanvas.width - basket.width, (clientX - rect.left) * scaleX - basket.width / 2));
+    }
+    gCanvas.addEventListener('mousemove', e => { if (gameRunning) moveBasket(e.clientX); });
+    gCanvas.addEventListener('touchmove', e => {
+      if (gameRunning && e.touches.length > 0) { moveBasket(e.touches[0].clientX); e.preventDefault(); }
+    }, { passive: false });
+
+    function gameLoop() {
+      gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+      if (gameRunning) {
+        spawnTimer++;
+        if (spawnTimer % 45 === 0) {
+          const isGold = Math.random() < 0.18;
+          gameItems.push({
+            x: Math.random() * (gCanvas.width - 50) + 25, y: -20, speed: Math.random() * 1.8 + 1.6,
+            type: isGold ? 'gold' : (Math.random() < 0.3 ? 'tulip' : 'sakura'),
+            wobble: Math.random() * Math.PI * 2
+          });
+        }
+        gCtx.fillStyle = '#f472b6'; gCtx.beginPath();
+        gCtx.roundRect(basket.x, basket.y, basket.width, basket.height, [8, 8, 20, 20]);
+        gCtx.fill(); gCtx.fillStyle = '#db2777'; gCtx.fillRect(basket.x - 4, basket.y - 4, basket.width + 8, 8);
+        gCtx.fillStyle = '#fff'; gCtx.font = '16px sans-serif'; gCtx.textAlign = 'center';
+        gCtx.fillText('🌸', basket.x + basket.width / 2, basket.y + 24);
+
+        for (let i = gameItems.length - 1; i >= 0; i--) {
+          const item = gameItems[i]; item.wobble += 0.03; item.x += Math.sin(item.wobble) * 1.2; item.y += item.speed;
+          gCtx.font = item.type === 'gold' ? '24px sans-serif' : '20px sans-serif'; gCtx.textAlign = 'center';
+          gCtx.fillText(item.type === 'gold' ? '⭐' : (item.type === 'tulip' ? '🌷' : '🌸'), item.x, item.y);
+
+          if (item.y + 10 >= basket.y && item.y - 10 <= basket.y + basket.height &&
+              item.x >= basket.x - 10 && item.x <= basket.x + basket.width + 10) {
+            score += item.type === 'gold' ? 50 : (item.type === 'tulip' ? 25 : 10);
+            caughtCount++; scoreEl.textContent = score; caughtEl.textContent = caughtCount;
+            if (score > bestScore) { bestScore = score; bestEl.textContent = bestScore; }
+            playPianoNote(notesPentatonic[Math.floor(Math.random() * notesPentatonic.length)], 1.2, 0.3);
+            gameItems.splice(i, 1); continue;
+          }
+          if (item.y > gCanvas.height + 25) gameItems.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+
+    // 4. Scrapbook Page Transition Observer
+    const scrapbookObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.scrapbook-page').forEach(el => scrapbookObserver.observe(el));
+  </script>
+</body>
+</html>

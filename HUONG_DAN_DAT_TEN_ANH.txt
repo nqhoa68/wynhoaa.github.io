@@ -1,0 +1,15 @@
+DANH SÁCH TÊN 8 BỨC ẢNH CẦN ĐẶT TRONG THƯ MỤC NÀY:
+==================================================
+
+1. avatar.jpg                  -> Ảnh chân dung của bạn (áo dài vàng)
+2. vinh_highschool.jpg         -> Ảnh trường Chuyên ĐH Vinh (áo xanh)
+3. ftu_student.jpg             -> Ảnh sinh viên ĐH Ngoại Thương
+4. literature.jpg              -> Ảnh sở thích Văn học (ở thư viện)
+5. dance.jpg                   -> Ảnh múa cổ trang (bộ đồ đỏ)
+6. travel.jpg                  -> Ảnh đi du lịch (thung lũng đồi núi)
+7. phim_cham.jpg               -> Ảnh poster sự kiện Phim Chạm
+8. graduation_volunteer.jpg    -> Ảnh tình nguyện viên lễ tốt nghiệp 2026
+
+Lưu ý:
+- Bạn chỉ cần chép các bức ảnh của mình vào đây và đổi đúng tên như trên.
+- Sau đó kéo thả cả file index.html và thư mục images này lên GitHub là ảnh sẽ được CỐ ĐỊNH VĨNH VIỄN, không ai thay đổi được!
